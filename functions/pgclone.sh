@@ -65,7 +65,7 @@ tmgen() {
 
 NOTE: Copy & Paste Url into Browser | Use Correct Google Account!
 
-https://accounts.google.com/o/oauth2/auth?client_id=$public&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=https://www.googleapis.com/auth/drive&response_type=code
+Paste the entire token on a local rclone install here
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z] Exit
@@ -74,8 +74,9 @@ https://accounts.google.com/o/oauth2/auth?client_id=$public&redirect_uri=urn:iet
 EOF
   read -p '↘️  Token | PRESS [ENTER]: ' token </dev/tty
   if [ "$token" = "exit" ] || [ "$token" = "EXIT" ] || [ "$token" = "q" ] || [ "$token" = "Q" ]; then mountsmenu; fi
-  curl --request POST --data "code=$token&client_id=$public&client_secret=$secret&redirect_uri=urn:ietf:wg:oauth:2.0:oob&grant_type=authorization_code" https://accounts.google.com/o/oauth2/token >/var/plexguide/pgtokentm.output
-  cat /var/plexguide/pgtokentm.output | grep access_token | awk '{ print $2 }' | cut -c2- | rev | cut -c3- | rev >/var/plexguide/pgtokentm2.output
+  echo $token >/var/plexguide/pgtokentm.output
+  
+  cat /var/plexguide/pgtokentm.output | grep access_token | awk -F\" '{ print $4 }' >/var/plexguide/pgtokentm2.output
   primet=$(cat /var/plexguide/pgtokentm2.output)
   curl -H "GData-Version: 3.0" -H "Authorization: Bearer $primet" https://www.googleapis.com/drive/v3/teamdrives >/var/plexguide/teamdrive.output
   tokenscript
@@ -168,7 +169,7 @@ EOF
 
 NOTE: Copy & Paste Url into Browser | Use Correct Google Account!
 
-https://accounts.google.com/o/oauth2/auth?client_id=$public&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=https://www.googleapis.com/auth/drive&response_type=code
+Paste the entire token on a local rclone install here
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [Z] Exit
@@ -177,10 +178,10 @@ https://accounts.google.com/o/oauth2/auth?client_id=$public&redirect_uri=urn:iet
 EOF
   read -p '↘️  Token | PRESS [ENTER]: ' token </dev/tty
   if [ "$token" = "exit" ] || [ "$token" = "EXIT" ] || [ "$token" = "q" ] || [ "$token" = "Q" ]; then mountsmenu; fi
-  curl --request POST --data "code=$token&client_id=$public&client_secret=$secret&redirect_uri=urn:ietf:wg:oauth:2.0:oob&grant_type=authorization_code" https://accounts.google.com/o/oauth2/token >/opt/appdata/plexguide/pgclone.info
+  echo $token >/opt/appdata/plexguide/pgclone.info
 
-  accesstoken=$(cat /opt/appdata/plexguide/pgclone.info | grep access_token | awk '{print $2}')
-  refreshtoken=$(cat /opt/appdata/plexguide/pgclone.info | grep refresh_token | awk '{print $2}')
+  accesstoken=$(cat /opt/appdata/plexguide/pgclone.info | grep access_token |  awk -F\" '{ print $4 }')
+  refreshtoken=$(cat /opt/appdata/plexguide/pgclone.info | grep refresh_token |  awk -F\" '{ print $12 }')
   rcdate=$(date +'%Y-%m-%d')
   rctime=$(date +"%H:%M:%S" --date="$givenDate 60 minutes")
   rczone=$(date +"%:z")
