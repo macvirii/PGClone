@@ -109,7 +109,7 @@ tlabeloauth() {
 
 Warning
 Use a local install of rclone, with the same client id and secret and
-Copy its access token (first text betweeen two double quotes) and paste
+Copy the entire token without parenthesis and paste here
 
 PUTTY USERS: Just select and highlight! DO NOT RIGHT CLICK! When you paste
 into the browser, it will just work!
@@ -123,7 +123,7 @@ EOF
 
   if [[ "$token" == "exit" || "$token" == "Exit" || "$token" == "EXIT" || "$token" == "z" || "$token" == "Z" ]]; then clonestart; fi
   echo $token >/var/plexguide/token.part1
-  curl -H "GData-Version: 3.0" -H "Authorization: Bearer $(cat /var/plexguide/token.part1 | grep access_token | awk -F: '{ print $2 }' | cut -c2- | rev | cut -c15- | rev)" $gtype >$storage
+  curl -H "GData-Version: 3.0" -H "Authorization: Bearer $(cat /var/plexguide/token.part1 | grep access_token | awk -F\" '{ print $4 }' )" $gtype >$storage
 
   teamdriveselect
 }
