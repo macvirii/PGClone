@@ -109,10 +109,9 @@ tlabeloauth() {
 🚀 Google Auth - Team Drive Label ~ oauth.pgblitz.com
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-https://accounts.google.com/o/oauth2/auth?client_id=${pgclonepublic}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=https://www.googleapis.com/auth/drive&response_type=code
-
-Copy & Paste the URL into Browser! Ensure to utilize and login with
-the correct Google Account!
+Warning
+Use a local install of rclone, with the same client id and secret and
+Copy its access token (first text betweeen two double quotes) and paste
 
 PUTTY USERS: Just select and highlight! DO NOT RIGHT CLICK! When you paste
 into the browser, it will just work!
@@ -125,7 +124,7 @@ EOF
   read -p '↘️  Token | PRESS [ENTER]: ' token </dev/tty
 
   if [[ "$token" == "exit" || "$token" == "Exit" || "$token" == "EXIT" || "$token" == "z" || "$token" == "Z" ]]; then clonestart; fi
-  curl --request POST --data "code=${token}&client_id=${pgclonepublic}&client_secret=${pgclonesecret}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&grant_type=authorization_code" https://accounts.google.com/o/oauth2/token >/var/plexguide/token.part1
+  $token >/var/plexguide/token.part1
   curl -H "GData-Version: 3.0" -H "Authorization: Bearer $(cat /var/plexguide/token.part1 | grep access_token | awk '{ print $2 }' | cut -c2- | rev | cut -c3- | rev)" $gtype >$storage
 
   teamdriveselect
