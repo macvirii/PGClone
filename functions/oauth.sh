@@ -35,7 +35,9 @@ EOF
   rctime=$(date +"%H:%M:%S" --date="$givenDate 60 minutes")
   rczone=$(date +"%:z")
   final=$(echo "${rcdate}T${rctime}${rczone}")
-
+  echo "[$type]"
+  echo "$pgclonepublic"
+  echo -n "{\"access_token\":${accesstoken}\"token_type\":\"Bearer\",\"refresh_token\":${refreshtoken}\"expiry\":\"${final}\"}"
   ########################
   rm -rf /opt/appdata/plexguide/.${type} 1>/dev/null 2>&1
   echo "" >/opt/appdata/plexguide/.${type}
