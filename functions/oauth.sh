@@ -123,7 +123,7 @@ EOF
 
   if [[ "$token" == "exit" || "$token" == "Exit" || "$token" == "EXIT" || "$token" == "z" || "$token" == "Z" ]]; then clonestart; fi
   echo $token >/var/plexguide/token.part1
-  curl -H "GData-Version: 3.0" -H "Authorization: Bearer $(cat /var/plexguide/token.part1 | grep access_token | awk '{ print $2 }' | cut -c2- | rev | cut -c3- | rev)" $gtype >$storage
+  curl -H "GData-Version: 3.0" -H "Authorization: Bearer $(cat /var/plexguide/token.part1 | grep access_token | awk -F: '{ print $2 }' | cut -c2- | rev | cut -c15- | rev)" $gtype >$storage
 
   teamdriveselect
 }
