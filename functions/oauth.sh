@@ -29,8 +29,8 @@ EOF
   if [[ "$token" == "exit" || "$token" == "Exit" || "$token" == "EXIT" || "$token" == "z" || "$token" == "Z" ]]; then clonestart; fi
   echo $token >/opt/appdata/plexguide/pgclone.info
 
-  accesstoken=$(cat /opt/appdata/plexguide/pgclone.info | grep access_token | awk '{print $2}')
-  refreshtoken=$(cat /opt/appdata/plexguide/pgclone.info | grep refresh_token | awk '{print $2}')
+  accesstoken=$(cat /opt/appdata/plexguide/pgclone.info | grep access_token |  awk -F\" '{ print $4 }')
+  refreshtoken=$(cat /opt/appdata/plexguide/pgclone.info | grep refresh_token |  awk -F\" '{ print $12 }')
   rcdate=$(date +'%Y-%m-%d')
   rctime=$(date +"%H:%M:%S" --date="$givenDate 60 minutes")
   rczone=$(date +"%:z")
