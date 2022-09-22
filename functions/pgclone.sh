@@ -799,7 +799,7 @@ testphase() {
   echo "client_id = $public" >>/opt/appdata/plexguide/test.conf
   echo "client_secret = $secret" >>/opt/appdata/plexguide/test.conf
   echo "type = drive" >>/opt/appdata/plexguide/test.conf
-  echo -n "token = {\"access_token\":${accesstoken}\"token_type\":\"Bearer\",\"refresh_token\":${refreshtoken}\"expiry\":\"${final}\"}" >>/opt/appdata/plexguide/test.conf
+  echo -n "token = {$token}" >>/opt/appdata/plexguide/test.conf
   echo "" >>/opt/appdata/plexguide/test.conf
   if [ "$type" == "tdrive" ]; then
     teamid=$(cat /var/plexguide/pgclone.teamid)
