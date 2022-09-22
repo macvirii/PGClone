@@ -14,10 +14,8 @@ oauth() {
 🚀 Google Auth - ${type} ~ oauth.pgblitz.com
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-https://accounts.google.com/o/oauth2/auth?client_id=$pgclonepublic&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=https://www.googleapis.com/auth/drive&response_type=code
-
-Copy & Paste the URL into Browser! Ensure to utilize and login with
-the correct Google Account!
+Warning
+Copy the entire token on a loca rclone install and paste here
 
 PUTTY USERS: Just select and highlight! DO NOT RIGHT CLICK! When you paste
 into the browser, it will just work!
@@ -29,7 +27,7 @@ into the browser, it will just work!
 EOF
   read -p '↘️  Token | PRESS [ENTER]: ' token </dev/tty
   if [[ "$token" == "exit" || "$token" == "Exit" || "$token" == "EXIT" || "$token" == "z" || "$token" == "Z" ]]; then clonestart; fi
-  curl --request POST --data "code=$token&client_id=$pgclonepublic&client_secret=$pgclonesecret&redirect_uri=urn:ietf:wg:oauth:2.0:oob&grant_type=authorization_code" https://accounts.google.com/o/oauth2/token >/opt/appdata/plexguide/pgclone.info
+  echo $token >/opt/appdata/plexguide/pgclone.info
 
   accesstoken=$(cat /opt/appdata/plexguide/pgclone.info | grep access_token | awk '{print $2}')
   refreshtoken=$(cat /opt/appdata/plexguide/pgclone.info | grep refresh_token | awk '{print $2}')
@@ -124,7 +122,7 @@ EOF
   read -p '↘️  Token | PRESS [ENTER]: ' token </dev/tty
 
   if [[ "$token" == "exit" || "$token" == "Exit" || "$token" == "EXIT" || "$token" == "z" || "$token" == "Z" ]]; then clonestart; fi
-  $token >/var/plexguide/token.part1
+  echo $token >/var/plexguide/token.part1
   curl -H "GData-Version: 3.0" -H "Authorization: Bearer $(cat /var/plexguide/token.part1 | grep access_token | awk '{ print $2 }' | cut -c2- | rev | cut -c3- | rev)" $gtype >$storage
 
   teamdriveselect
