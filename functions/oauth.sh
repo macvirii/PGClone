@@ -45,7 +45,7 @@ EOF
   echo "client_id = $pgclonepublic" >>/opt/appdata/plexguide/.${type}
   echo "client_secret = $pgclonesecret" >>/opt/appdata/plexguide/.${type}
   echo "type = drive" >>/opt/appdata/plexguide/.${type}
-  echo -n "token = {\"access_token\":${accesstoken}\"token_type\":\"Bearer\",\"refresh_token\":${refreshtoken}\"expiry\":\"${final}\"}" >>/opt/appdata/plexguide/.${type}
+  echo -n "token = {$token}" >>/opt/appdata/plexguide/.${type}
   echo "" >>/opt/appdata/plexguide/.${type}
   if [ "$type" == "tdrive" ]; then
     teamid=$(cat /var/plexguide/pgclone.teamid)
